@@ -7,13 +7,14 @@ export const validate = (blockchain) => {
     throw Error('Invalid genesis block.');
 
   for (let i = 0; i < blocks.length; i++) {
-    const { timestamp, previousHash, hash, data } = blocks[i];
+    const { timestamp, previousHash, hash, data, nonce, difficulty } =
+      blocks[i];
     const previousBlock = blockchain[i];
 
     if (previousHash !== previousBlock.hash)
       throw Error('Invalid previous hash.');
 
-    if (hash !== Block.hash(timestamp, previousHash, data))
+    if (hash !== Block.hash(timestamp, previousHash, data, nonce, difficulty))
       throw Error('Invalid hash.');
   }
   return true;

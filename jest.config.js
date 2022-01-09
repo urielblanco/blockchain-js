@@ -1,5 +1,5 @@
 const config = {
-  silent: true,
+  silent: false,
   verbose: true,
   testEnvironment: 'node',
 };

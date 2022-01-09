@@ -1,7 +1,7 @@
 import { Block } from './block';
 import { validate } from './modules/validate';
 
-export class Blockchain {
+class Blockchain {
   constructor() {
     this.blocks = [Block.genesis];
   }
@@ -30,3 +30,5 @@ export class Blockchain {
     return this.blocks;
   }
 }
+
+export { Blockchain };
