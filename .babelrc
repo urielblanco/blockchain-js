@@ -5,7 +5,9 @@
       "module-resolver",
       {
         "alias": {
-          "@blockchain": ["./src/blockchain"]
+          "@blockchain": ["./src/blockchain"],
+          "@wallet": ["./src/wallet"],
+          "@modules": ["./src/modules"]
         }
       }
     ]

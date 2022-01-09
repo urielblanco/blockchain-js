@@ -1,4 +1,4 @@
-import { SHA256 } from 'crypto-js';
+import { hash as genHash } from '@modules';
 import { Block, DIFFICULTY } from './block';
 
 describe('Block', () => {
@@ -45,9 +45,9 @@ describe('Block', () => {
       nonce,
       DIFFICULTY
     );
-    const hashExpected = SHA256(
+    const hashExpected = genHash(
       `${timestamp}${previousBlock.hash}${data}${nonce}${DIFFICULTY}`
-    ).toString();
+    );
 
     expect(hashActual).toEqual(hashExpected);
   });
