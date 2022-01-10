@@ -6,6 +6,7 @@
       {
         "alias": {
           "@blockchain": ["./src/blockchain"],
+          "@blockchain/modules": ["./src/blockchain/modules"],
           "@wallet": ["./src/wallet"],
           "@modules": ["./src/modules"]
         }

@@ -1,9 +1,10 @@
-import { Block } from './block';
-import { validate } from './modules/validate';
+import { Block, MemoryPool } from '@blockchain';
+import { validate } from '@blockchain/modules';
 
 class Blockchain {
   constructor() {
     this.blocks = [Block.genesis];
+    this.memoryPool = new MemoryPool();
   }
 
   addBlock(data) {

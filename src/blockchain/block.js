@@ -1,5 +1,5 @@
 import { hash } from '@modules';
-import { adjustDifficulty } from '@blockchain';
+import { adjustDifficulty } from '@blockchain/modules';
 
 const DIFFICULTY = 3;
 class Block {
