@@ -1,14 +1,14 @@
 {
   "name": "first-blockchain",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node ./src/service/index.js",
-    "start:2": "HTTP_PORT=3001 P2P_PORT=5001 PEERS=ws:localhost:5000 babel-node ./src/service/index.js",
-    "start:3": "HTTP_PORT=3002 P2P_PORT=5002 PEERS=ws:localhost:5000,ws:localhost:5001 babel-node ./src/service/index.js",
+    "start": "babel-node ./server.js",
+    "start:2": "HTTP_PORT=3001 P2P_PORT=5001 PEERS=ws:localhost:5000 babel-node ./server.js",
+    "start:3": "HTTP_PORT=3002 P2P_PORT=5002 PEERS=ws:localhost:5000,ws:localhost:5001 babel-node ./server.js",
     "nodemon": "nodemon --exec yarn start",
-    "lint": "eslint index.js src",
+    "lint": "eslint src",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
@@ -27,6 +27,7 @@
     "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-import-resolver-babel-module": "^5.3.1",
     "eslint-plugin-import": "^2.25.3",
     "nodemon": "^2.0.15"
   },

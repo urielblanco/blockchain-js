@@ -1,6 +1,7 @@
 import { v1 as uuidv1 } from 'uuid';
 import { elliptic } from '@modules';
 
+const REWARD = 1;
 class Transaction {
   constructor() {
     this.id = uuidv1();
@@ -35,6 +36,10 @@ class Transaction {
     };
   }
 
+  static reward(minerWallet, blockchainWallet) {
+    return this.create(blockchainWallet, minerWallet.publicKey, REWARD);
+  }
+
   static verify(transaction) {
     const {
       input: { address, signature },
@@ -49,8 +54,9 @@ class Transaction {
       ({ address }) => address === senderWallet.publicKey
     );
 
-    if (amount > senderOutput.amount)
+    if (amount > senderOutput.amount) {
       throw Error(`Amount: ${amount} exceeds balance.`);
+    }
 
     senderOutput.amount -= amount;
 
@@ -61,4 +67,4 @@ class Transaction {
   }
 }
 
-export { Transaction };
+export { Transaction, REWARD };

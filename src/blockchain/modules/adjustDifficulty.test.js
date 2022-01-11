@@ -1,4 +1,4 @@
-import { adjustDifficulty } from '@blockchain/modules';
+import { adjustDifficulty } from '@blockchain/modules/adjustDifficulty';
 
 describe('adjustDifficulty()', () => {
   let block;

@@ -4,11 +4,16 @@
     [
       "module-resolver",
       {
+        "root": ["./src/"],
         "alias": {
-          "@blockchain": ["./src/blockchain"],
-          "@blockchain/modules": ["./src/blockchain/modules"],
-          "@wallet": ["./src/wallet"],
-          "@modules": ["./src/modules"]
+          "@blockchain": "./src/blockchain",
+          "@blockchain/modules/*": "./src/blockchain/modules/*",
+          "@wallet": "./src/wallet/wallet.js",
+          "@transaction": "./src/wallet/transaction.js",
+          "@blockchainWallet": "./src/wallet/blockchainWallet.js",
+          "@modules": "./src/modules",
+          "@miner": "./src/miner",
+          "@p2p": "./src/services/p2p"
         }
       }
     ]

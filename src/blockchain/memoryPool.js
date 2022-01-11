@@ -1,4 +1,4 @@
-import { Transaction } from '@wallet';
+import { Transaction } from '@transaction';
 
 class MemoryPool {
   constructor() {
@@ -9,10 +9,12 @@ class MemoryPool {
     const { input, outputs = [] } = transaction;
     const outputTotal = outputs.reduce((acc, cur) => acc + cur.amount, 0);
 
-    if (input.amount !== outputTotal)
+    if (input.amount !== outputTotal) {
       throw Error(`Invalid transaction from ${input.address}`);
-    if (!Transaction.verify(transaction))
+    }
+    if (!Transaction.verify(transaction)) {
       throw Error(`Invalid signature from ${input.address}`);
+    }
 
     const txIndex = this.transactions.findIndex(
       ({ id }) => id === transaction.id
@@ -24,6 +26,10 @@ class MemoryPool {
 
   find(address) {
     return this.transactions.find(({ input }) => input.address === address);
+  }
+
+  wipe() {
+    this.transactions = [];
   }
 }
 

@@ -1,2 +1,2 @@
 export * from './hash';
-export * from './elliptic';
+export { elliptic } from './elliptic';

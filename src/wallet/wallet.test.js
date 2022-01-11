@@ -1,5 +1,6 @@
-import { Wallet, INITIAL_BALANCE } from '@wallet';
 import { Blockchain } from '@blockchain';
+import { Wallet, INITIAL_BALANCE } from './wallet';
+
 describe('Wallet', () => {
   let blockchain;
   let wallet;
@@ -53,6 +54,66 @@ describe('Wallet', () => {
           .map((output) => output.amount);
 
         expect(amounts).toEqual([amount, amount]);
+      });
+    });
+  });
+
+  describe('calculating a balance', () => {
+    let addBalance;
+    let times;
+    let senderWallet;
+
+    beforeEach(() => {
+      addBalance = 16;
+      times = 3;
+      senderWallet = new Wallet(blockchain);
+
+      for (let i = 0; i < times; i++) {
+        senderWallet.createTransaction(wallet.publicKey, addBalance);
+      }
+
+      blockchain.addBlock(blockchain.memoryPool.transactions);
+    });
+
+    it('calculates the balance for blockchain txs matching the recipient', () => {
+      expect(wallet.currentBalance).toEqual(
+        INITIAL_BALANCE + addBalance * times
+      );
+    });
+
+    it('calculates the balance for blockchain txs matching the sender', () => {
+      expect(senderWallet.currentBalance).toEqual(
+        INITIAL_BALANCE - addBalance * times
+      );
+    });
+
+    describe('the recipient conducts a transaction', () => {
+      let subtractedBalance;
+      let recipientBalance;
+
+      beforeEach(() => {
+        blockchain.memoryPool.wipe();
+        subtractedBalance = 64;
+        recipientBalance = wallet.currentBalance;
+
+        wallet.createTransaction(senderWallet.publicKey, addBalance);
+
+        blockchain.addBlock(blockchain.memoryPool.transactions);
+      });
+
+      describe('the senders send another transaction to the recipient', () => {
+        beforeEach(() => {
+          blockchain.memoryPool.wipe();
+          senderWallet.createTransaction(wallet.publicKey, addBalance);
+
+          blockchain.addBlock(blockchain.memoryPool.transactions);
+        });
+
+        it('calculates the recipient balance only using txs since its most recent one', () => {
+          expect(wallet.currentBalance).toEqual(
+            recipientBalance - subtractedBalance + addBalance
+          );
+        });
       });
     });
   });

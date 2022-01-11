@@ -1,5 +1,5 @@
-import { hash } from '@modules';
-import { adjustDifficulty } from '@blockchain/modules';
+import { hash as genHash } from '@modules';
+import { adjustDifficulty } from '@blockchain/modules/adjustDifficulty';
 
 const DIFFICULTY = 3;
 class Block {
@@ -30,7 +30,7 @@ class Block {
     let nonce = 0;
     let timestamp;
     let { difficulty } = previousBlock;
-    let startsMined = Date.now();
+    const startsMined = Date.now();
 
     do {
       timestamp = Date.now();
@@ -43,9 +43,7 @@ class Block {
   }
 
   static hash(timestamp, previousHash, data, nonce, difficulty) {
-    return hash(
-      `${timestamp}${previousHash}${data}${nonce}${difficulty}`
-    );
+    return genHash(`${timestamp}${previousHash}${data}${nonce}${difficulty}`);
   }
 
   toString() {

@@ -1,5 +1,6 @@
-import { Block, MemoryPool } from '@blockchain';
-import { validate } from '@blockchain/modules';
+import { validate } from '@blockchain/modules/validate';
+import { Block } from './block';
+import { MemoryPool } from './memoryPool';
 
 class Blockchain {
   constructor() {
@@ -17,8 +18,9 @@ class Blockchain {
   }
 
   replace(newBlocks = []) {
-    if (newBlocks.length < this.blocks.length)
+    if (newBlocks.length < this.blocks.length) {
       throw Error('Received chain is not longer than the current chain.');
+    }
 
     try {
       validate(newBlocks);

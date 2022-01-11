@@ -7,6 +7,11 @@
   "rules": {
     "max-len": [1, 120, { "tabWidth": 2, "ignoreComments": true }],
     "comma-dangle": "off",
-    "import/prefer-default-export": false
+    "import/prefer-default-export": "off",
+    "object-curly-newline":"off",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+  },
+  "settings": {
+    "import/resolver": { "babel-module": {} }
   }
 }

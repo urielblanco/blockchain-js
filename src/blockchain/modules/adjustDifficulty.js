@@ -6,11 +6,11 @@ const adjustDifficulty = (previousBlock, startsMined, timestamp) => {
 
   const diff = timestamp - startsMined;
 
-  return diff < MIN_RATE
-    ? difficulty + 1
-    : diff > MAX_RATE
-    ? difficulty - 1
-    : difficulty;
+  if (diff < MIN_RATE) return difficulty + 1;
+
+  if (diff > MAX_RATE) return difficulty - 1;
+
+  return difficulty;
 };
 
 export { adjustDifficulty };

@@ -1,35 +1,27 @@
 import { Blockchain } from '@blockchain';
 import { Wallet } from '@wallet';
-
-import { P2PService, MESSAGES } from './p2p';
+import { P2PService, MESSAGES } from '@p2p';
+import { Miner } from '@miner';
 
 import express from 'express';
-
-const { HTTP_PORT = 3000 } = process.env;
 
 const app = express();
 const blockchain = new Blockchain();
 const wallet = new Wallet(blockchain);
+const walletMiner = new Wallet(blockchain, 0);
 const p2pservice = new P2PService(blockchain);
+const miner = new Miner(blockchain, p2pservice, walletMiner);
 
 app.use(express.json());
 
-app.get('/blocks', (req, res) => {
-  res.status(200).json(blockchain.blocks);
+app.get('/wallet', (req, res) => {
+  const { publicKey } = new Wallet(blockchain);
+
+  res.status(200).json({ publicKey });
 });
 
-app.post('/mine', (req, res) => {
-  const {
-    body: { data },
-  } = req;
-  const block = blockchain.addBlock(data);
-
-  p2pservice.sync();
-
-  res.status(201).json({
-    blocks: blockchain.blocks.length,
-    block,
-  });
+app.get('/blocks', (req, res) => {
+  res.status(200).json(blockchain.blocks);
 });
 
 app.get('/transactions', (req, res) => {
@@ -54,7 +46,13 @@ app.post('/transactions', (req, res) => {
   }
 });
 
-app.listen(HTTP_PORT, () => {
-  console.log(`Service HTTP: ${HTTP_PORT} listening...`);
-  p2pservice.listen();
+app.get('/mine/transactions', (req, res) => {
+  try {
+    miner.mine();
+    res.redirect('/blocks');
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
+
+export { app, p2pservice };
