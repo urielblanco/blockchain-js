@@ -4,23 +4,28 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node ./server.js",
+    "start": "node ./dist/server.js",
+    "start:dev": "babel-node ./server.js",
     "start:2": "HTTP_PORT=3001 P2P_PORT=5001 PEERS=ws:localhost:5000 babel-node ./server.js",
     "start:3": "HTTP_PORT=3002 P2P_PORT=5002 PEERS=ws:localhost:5000,ws:localhost:5001 babel-node ./server.js",
     "nodemon": "nodemon --exec yarn start",
     "lint": "eslint src",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "build": "babel server.js app.js -d dist && yarn copy-files",
+    "copy-files": "babel src --copy-files -d dist/src"
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
     "elliptic": "^6.5.4",
+    "esbuild": "^0.14.23",
     "express": "^4.17.2",
     "jest": "^27.4.5",
     "uuid": "^8.3.2",
     "ws": "^8.4.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
     "@babel/core": "^7.16.7",
     "@babel/node": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
@@ -33,5 +38,9 @@
   },
   "import": {
     "@blockchain/*": "./src/blockchain/*"
+  },
+  "engines": {
+    "yarn": "1.x",
+    "node": "16.x"
   }
 }

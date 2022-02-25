@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 
-const { P2P_PORT = 5000, PEERS } = process.env;
+const { P2P_PORT = 5001, PEERS } = process.env;
 const peers = PEERS ? PEERS.split(',') : [];
 const MESSAGES = {
   BLOCKS: 'blocks',
@@ -31,7 +31,7 @@ class P2PService {
 
     console.log('[ws:socket] connected.');
     this.sockets.push(socket);
-
+    console.log(this.sockets);
     socket.on('message', (message) => {
       const { type, value } = JSON.parse(message);
 
